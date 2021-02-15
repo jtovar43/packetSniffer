@@ -4,10 +4,11 @@ import java.io.EOFException;
 import java.net.Inet4Address;
 import java.util.concurrent.TimeoutException;
 
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,6 +33,7 @@ public class ScannerCaptureView extends JPanel {
     };
     private JTable captureTable;
     private int packetNum = 1;
+    static boolean capturing = true;
     PcapNetworkInterface listenInterface;
 
     public ScannerCaptureView() throws PcapNativeException {
@@ -40,36 +42,44 @@ public class ScannerCaptureView extends JPanel {
         try {
             startCapture();
         } catch (EOFException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
+            JOptionPane.showMessageDialog(this,"Fatal - EOFException");
             e.printStackTrace();
         } catch (NotOpenException e) {
+            JOptionPane.showMessageDialog(this,"Fatal - NotOpenException");
             e.printStackTrace();
         }
     }
 
     private void initComponents() throws PcapNativeException {
         captureTable = new JTable(tableModel);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        captureTable.setDefaultRenderer(String.class, centerRenderer);
         this.add(new JScrollPane(captureTable));
     }
 
-    public void startCapture() throws PcapNativeException, EOFException, TimeoutException, NotOpenException {
+    public void startCapture() throws PcapNativeException, EOFException, NotOpenException {
         listenInterface = Pcaps.getDevByName(StartScreen.selectedNIC);
         PromiscuousMode mode = PromiscuousMode.PROMISCUOUS;
-        int timeout = 1000;
+        int timeout = 1500;
         int snapLen = 65536;
         PcapHandle handle = listenInterface.openLive(snapLen, mode, timeout);
-        Packet packet = handle.getNextPacketEx();
+        while (capturing) {
+            Packet packet;
+            try {
+                packet = handle.getNextPacketEx();
+            } catch (TimeoutException e) {
+                continue;
+            }
+            IpV4Packet ipV4Packet = packet.get(IpV4Packet.class);
+            if (ipV4Packet!=null) {
+                Inet4Address srcAddr = ipV4Packet.getHeader().getSrcAddr();
+                Inet4Address dstAddr = ipV4Packet.getHeader().getDstAddr();
+                IpNumber protocol = ipV4Packet.getHeader().getProtocol();
+                Object [] newRow = {srcAddr.getHostAddress(),dstAddr.getHostAddress(),protocol,packetNum};
+                tableModel.addRow(newRow);
+                tableModel.fireTableDataChanged();
+                this.repaint();
+                packetNum++;
+            }
+        }
         handle.close();
-        IpV4Packet ipV4Packet = packet.get(IpV4Packet.class);
-        Inet4Address srcAddr = ipV4Packet.getHeader().getSrcAddr();
-        Inet4Address dstAddr = ipV4Packet.getHeader().getDstAddr();
-        IpNumber protocol = ipV4Packet.getHeader().getProtocol();
-        Object [] newRow = {srcAddr.getHostAddress(),dstAddr.getHostAddress(),protocol,packetNum};
-        tableModel.addRow(newRow);
-        tableModel.fireTableDataChanged();
     }
 }

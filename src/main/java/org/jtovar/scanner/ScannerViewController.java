@@ -1,14 +1,12 @@
 package org.jtovar.scanner;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
 import org.pcap4j.core.PcapNativeException;
 
-public class ScannerViewController extends JPanel implements ActionListener {
+public class ScannerViewController extends JPanel {
 
     private ScannerTopPanel top;
     private ScannerCaptureView captureView;
@@ -29,9 +27,4 @@ public class ScannerViewController extends JPanel implements ActionListener {
         this.add(top, BorderLayout.NORTH);
         this.add(captureView, BorderLayout.CENTER);
     }
-
-    public void actionPerformed(ActionEvent event) {
-        Object source = event.getSource();
-    }
-
 }
