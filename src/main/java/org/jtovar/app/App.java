@@ -1,14 +1,15 @@
 package org.jtovar.app;
 
-import org.jtovar.GUI.MainWindow;
 /**
- * Hello world!
- *
+ * @author Justin Tovar
+ * @version 1.0
+ * @date 2021
  */
 public class App 
 {
+    public static MainWindow window;
     public static void main( String[] args )
     {
-        MainWindow window = new MainWindow();
+        window = new MainWindow();
     }
 }
