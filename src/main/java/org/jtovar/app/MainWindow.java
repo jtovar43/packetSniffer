@@ -2,12 +2,12 @@ package org.jtovar.app;
 
 import javax.swing.JFrame;
 
-import org.jtovar.interfaceselect.*;
+import org.jtovar.scanner.*;
 import org.pcap4j.core.PcapNativeException;
 
 public class MainWindow extends JFrame {
 
-    private StartScreen ss;
+    public StartScreen ss;
 
     public MainWindow() {
         super("Interface Select");

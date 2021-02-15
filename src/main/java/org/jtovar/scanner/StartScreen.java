@@ -59,7 +59,7 @@ public class StartScreen extends JPanel implements ActionListener {
                 App.window.setVisible(false);
                 App.window.remove(App.window.ss);
                 App.window.setSize(1000,710);
-                App.window.add(new ScannerView());
+                App.window.add(new ScannerViewController());
                 App.window.setTitle("Listening on interface "+selectedNIC);
                 App.window.setVisible(true);
             } 
