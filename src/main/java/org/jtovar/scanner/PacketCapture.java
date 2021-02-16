@@ -61,7 +61,7 @@ public class PacketCapture implements Runnable {
             Inet4Address dstAddr = ipV4Packet.getHeader().getDstAddr();
             IpNumber protocol = ipV4Packet.getHeader().getProtocol();
             Object [] newRow = {srcAddr.getHostAddress(),dstAddr.getHostAddress(),protocol,packetNum};
-            ScannerCaptureView.tableModel.addRow(newRow);
+            ScannerCaptureView.tableModel.insertRow(0,newRow);
             ScannerCaptureView.tableModel.fireTableDataChanged();
             ScannerViewController.captureView.revalidate();
             ScannerViewController.captureView.repaint();

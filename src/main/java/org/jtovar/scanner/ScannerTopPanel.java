@@ -31,14 +31,15 @@ public class ScannerTopPanel extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
+        PacketCapture sniffer = new PacketCapture();
+        Thread sniffThread = new Thread(sniffer);
+
         Object source = event.getSource();
         if (source.equals(stopBtn)) {
             PacketCapture.capturing=false;
         }
         if (source.equals(startBtn)) {
             PacketCapture.capturing = true;
-            PacketCapture sniffer = new PacketCapture();
-            Thread sniffThread = new Thread(sniffer);
             sniffThread.start();
         }
     }
