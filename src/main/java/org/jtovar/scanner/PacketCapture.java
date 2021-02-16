@@ -66,7 +66,6 @@ public class PacketCapture implements Runnable {
             Inet4Address srcAddr = ipV4Packet.getHeader().getSrcAddr();
             Inet4Address dstAddr = ipV4Packet.getHeader().getDstAddr();
             IpNumber protocol = ipV4Packet.getHeader().getProtocol();
-            System.out.println(ipV4Packet.getPayload());
             Object srcPort = "";
             Object dstPort = "";
             if (packet.contains(TcpPacket.class)) {
@@ -78,7 +77,7 @@ public class PacketCapture implements Runnable {
                 srcPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getSrcPort();
                 dstPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getDstPort();
             }
-            Object [] newRow = {srcAddr.getHostAddress()+": "+srcPort,dstAddr.getHostAddress()+": "+dstPort,protocol,packetNum};
+            Object [] newRow = {srcAddr.getHostAddress()+": "+srcPort,dstAddr.getHostAddress()+": "+dstPort,protocol,packetNum,ipV4Packet.getPayload()};
             ScannerCaptureView.tableModel.insertRow(0,newRow);
             ScannerCaptureView.tableModel.fireTableDataChanged();
             ScannerViewController.captureView.revalidate();

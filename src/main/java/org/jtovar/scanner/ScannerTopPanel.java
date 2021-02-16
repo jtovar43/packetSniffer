@@ -3,6 +3,8 @@ package org.jtovar.scanner;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.jtovar.app.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
@@ -42,6 +44,11 @@ public class ScannerTopPanel extends JPanel implements ActionListener {
                 this.repaint();
                 sniffThread.start();
             }
+        }
+
+        if (source.equals(returnBtn)) {
+            App.window.dispose();
+            new MainWindow();
         }
     }
     
