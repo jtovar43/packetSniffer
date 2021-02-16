@@ -4,12 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import org.pcap4j.core.NotOpenException;
-import org.pcap4j.core.PcapNativeException;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.EOFException;
 
 public class ScannerTopPanel extends JPanel implements ActionListener {
 
