@@ -2,7 +2,6 @@ package org.jtovar.scanner;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
