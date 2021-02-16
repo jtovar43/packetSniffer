@@ -17,8 +17,7 @@ public class ScannerCaptureView extends JPanel {
         }
     };
 
-    JTable captureTable;
-    enum protocols {}
+    static JTable captureTable;
 
     public ScannerCaptureView() throws PcapNativeException {
         super(new GridLayout());

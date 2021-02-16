@@ -1,5 +1,7 @@
 package org.jtovar.scanner;
 
+import java.awt.Color;
+
 import java.io.EOFException;
 import java.net.Inet4Address;
 import java.util.concurrent.TimeoutException;
@@ -12,7 +14,11 @@ import org.pcap4j.core.Pcaps;
 import org.pcap4j.core.PcapNetworkInterface.PromiscuousMode;
 import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
+import org.pcap4j.packet.TcpPacket;
+import org.pcap4j.packet.UdpPacket;
 import org.pcap4j.packet.namednumber.IpNumber;
+import org.pcap4j.packet.namednumber.TcpPort;
+import org.pcap4j.packet.namednumber.UdpPort;
 
 public class PacketCapture implements Runnable {
 
@@ -60,7 +66,19 @@ public class PacketCapture implements Runnable {
             Inet4Address srcAddr = ipV4Packet.getHeader().getSrcAddr();
             Inet4Address dstAddr = ipV4Packet.getHeader().getDstAddr();
             IpNumber protocol = ipV4Packet.getHeader().getProtocol();
-            Object [] newRow = {srcAddr.getHostAddress(),dstAddr.getHostAddress(),protocol,packetNum};
+            System.out.println(ipV4Packet.getPayload());
+            Object srcPort = "";
+            Object dstPort = "";
+            if (packet.contains(TcpPacket.class)) {
+                ScannerCaptureView.captureTable.setBackground(Color.GREEN);
+                srcPort = (TcpPort)packet.get(TcpPacket.class).getHeader().getSrcPort();
+                dstPort = (TcpPort)packet.get(TcpPacket.class).getHeader().getDstPort();
+            } else if (packet.contains(UdpPacket.class)) {
+                ScannerCaptureView.captureTable.setBackground(Color.BLUE);
+                srcPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getSrcPort();
+                dstPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getDstPort();
+            }
+            Object [] newRow = {srcAddr.getHostAddress()+": "+srcPort,dstAddr.getHostAddress()+": "+dstPort,protocol,packetNum};
             ScannerCaptureView.tableModel.insertRow(0,newRow);
             ScannerCaptureView.tableModel.fireTableDataChanged();
             ScannerViewController.captureView.revalidate();
