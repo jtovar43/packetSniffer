@@ -1,5 +1,6 @@
 package org.jtovar.scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -11,8 +12,11 @@ import java.awt.Color;
 
 public class ScannerTopPanel extends JPanel implements ActionListener {
 
-    JButton returnBtn = new JButton("Return to Interfaces");
-    JButton toggleCaptureBtn = new JButton("Start Capture");
+    ImageIcon startIcon = new ImageIcon("resources/start.png");
+    ImageIcon stopIcon = new ImageIcon("resources/stop.png");
+    ImageIcon backIcon = new ImageIcon("resources/back.png");
+    JButton toggleCaptureBtn = new JButton(startIcon);
+    JButton returnBtn = new JButton(backIcon);
 
     public ScannerTopPanel() {
         super();
@@ -20,11 +24,26 @@ public class ScannerTopPanel extends JPanel implements ActionListener {
     }
 
     private void initComponents() {
+        toggleCaptureBtn.setOpaque(false);
+        toggleCaptureBtn.setContentAreaFilled(false);
+        toggleCaptureBtn.setBorderPainted(false);
+        toggleCaptureBtn.setFocusPainted(false);
+        returnBtn.setOpaque(false);
+        returnBtn.setContentAreaFilled(false);
+        returnBtn.setBorderPainted(false);
+        returnBtn.setFocusPainted(false);
         toggleCaptureBtn.addActionListener(this);
         returnBtn.addActionListener(this);
-        toggleCaptureBtn.setForeground(Color.GREEN);
-        this.add(toggleCaptureBtn);
         this.add(returnBtn);
+        this.add(toggleCaptureBtn);
+    }
+
+    public void refreshButtons() {
+        if (PacketCapture.capturing) {
+            toggleCaptureBtn.setIcon(stopIcon);
+        } else {
+            toggleCaptureBtn.setIcon(startIcon);
+        }
     }
 
     public void actionPerformed(ActionEvent event) {
@@ -33,21 +52,20 @@ public class ScannerTopPanel extends JPanel implements ActionListener {
         Object source = event.getSource();
         if (source.equals(toggleCaptureBtn)) {
             if (PacketCapture.capturing) {
-                toggleCaptureBtn.setText("Start Capture");
                 PacketCapture.capturing = false;
-                toggleCaptureBtn.setForeground(Color.GREEN);
+                
             } else {
-                toggleCaptureBtn.setText("Stop Capture");
                 PacketCapture.capturing = true;
-                toggleCaptureBtn.setForeground(Color.RED);
-                this.revalidate();
-                this.repaint();
                 sniffThread.start();
             }
+            refreshButtons();
+            this.revalidate();
+            this.repaint();
         }
 
-        if (source.equals(returnBtn)) {
+        else if (source.equals(returnBtn)) {
             App.window.dispose();
+            ScannerCaptureView.tableModel.setRowCount(0);
             new MainWindow();
         }
     }

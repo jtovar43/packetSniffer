@@ -38,6 +38,8 @@ public class PacketCapture implements Runnable {
         }
         PromiscuousMode mode = PromiscuousMode.PROMISCUOUS;
         int timeout = 500;
+        Color udpColor = new Color(207,226,243);
+        Color tcpColor = new Color(233,253,204);
         int snapLen = 65536;
         PcapHandle handle;
         try {
@@ -69,11 +71,11 @@ public class PacketCapture implements Runnable {
             Object srcPort = "";
             Object dstPort = "";
             if (packet.contains(TcpPacket.class)) {
-                ScannerCaptureView.captureTable.setBackground(Color.GREEN);
+                ScannerCaptureView.captureTable.setBackground(tcpColor);
                 srcPort = (TcpPort)packet.get(TcpPacket.class).getHeader().getSrcPort();
                 dstPort = (TcpPort)packet.get(TcpPacket.class).getHeader().getDstPort();
             } else if (packet.contains(UdpPacket.class)) {
-                ScannerCaptureView.captureTable.setBackground(Color.BLUE);
+                ScannerCaptureView.captureTable.setBackground(udpColor);
                 srcPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getSrcPort();
                 dstPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getDstPort();
             }
