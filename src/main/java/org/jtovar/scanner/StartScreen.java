@@ -11,7 +11,6 @@ import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,9 +56,10 @@ public class StartScreen extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this,"Please select an interface");
             } else {
                 App.window.setVisible(false);
-                App.window.remove(App.window.ss);
+                App.window.getContentPane().removeAll();
                 App.window.setSize(1000,710);
-                App.window.add(new ScannerViewController());
+                ScannerViewController controller = new ScannerViewController();
+                App.window.getContentPane().add(controller);
                 App.window.setTitle("Listening on interface "+selectedNIC);
                 App.window.setVisible(true);
             } 

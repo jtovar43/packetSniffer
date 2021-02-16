@@ -2,6 +2,7 @@ package org.jtovar.scanner;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.pcap4j.core.PcapNativeException;
@@ -9,7 +10,7 @@ import org.pcap4j.core.PcapNativeException;
 public class ScannerViewController extends JPanel {
 
     private ScannerTopPanel top;
-    private ScannerCaptureView captureView;
+    static ScannerCaptureView captureView;
 
     public ScannerViewController() {
         super();
@@ -22,6 +23,7 @@ public class ScannerViewController extends JPanel {
         try {
             captureView = new ScannerCaptureView();
         } catch (PcapNativeException e) {
+            JOptionPane.showMessageDialog(this,"Fatal - PcapNativeException");
             e.printStackTrace();
         }
         this.add(top, BorderLayout.NORTH);
