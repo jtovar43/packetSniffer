@@ -3,6 +3,7 @@ Created by Justin Tovar
 
 _**NOTE: This project is under active development as a personal project and not intended for production or actual use**_
 
+![GitHub CodeQL Workflow](https://img.shields.io/github/workflow/status/jtovar43/packetSniffer/CodeQL)
 ![GitHub last commit](https://img.shields.io/github/last-commit/jtovar43/packetSniffer)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/jtovar43/packetSniffer/master/LICENSEs)
 
