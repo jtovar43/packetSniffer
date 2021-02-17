@@ -1,5 +1,5 @@
 # Packet Sniffer
-Created by Justin Tovar
+Created by [Justin Tovar](https://github.com/jtovar43)
 
 _**NOTE: This project is under active development as a personal project and not intended for production**_
 
