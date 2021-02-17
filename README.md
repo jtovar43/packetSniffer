@@ -1,7 +1,7 @@
 # Packet Sniffer
 Created by Justin Tovar
 
-_**NOTE: This project is under active development as a personal project and not intended for production or actual use**_
+_**NOTE: This project is under active development as a personal project and not intended for production**_
 
 ![GitHub latest version](https://img.shields.io/github/v/release/jtovar43/packetSniffer)
 ![GitHub CodeQL Workflow](https://img.shields.io/github/workflow/status/jtovar43/packetSniffer/CodeQL)
