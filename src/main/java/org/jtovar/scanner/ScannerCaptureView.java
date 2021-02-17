@@ -11,8 +11,9 @@ import java.awt.GridLayout;
 
 import org.pcap4j.core.PcapNativeException;
 public class ScannerCaptureView extends JPanel {
-    static String[] columnNames = { "<html><h3>Source<h3></html>", "<html><h3>Destination<h3></html>",
-            "<html><h3>Port/Protocol<h3></html>", "<html><h3>Packet No.<h3></html>", "<html><h3>Info<h3></html>" };
+    static String[] columnNames = { "<html><h3>Source <h3></html>","<html><h3>Src Port/Service<h3></html>", 
+    "<html><h3>Destination<h3></html>","<html><h3>Dst Port/Service<h3></html>","<html><h3>Protocol<h3></html>", 
+    "<html><h3>Packet No.<h3></html>", "<html><h3>Info<h3></html>" };
     static DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
         public boolean isCellEditable(int row, int column) {
             return false;

@@ -79,7 +79,7 @@ public class PacketCapture implements Runnable {
                 srcPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getSrcPort();
                 dstPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getDstPort();
             }
-            Object [] newRow = {srcAddr.getHostAddress()+": "+srcPort,dstAddr.getHostAddress()+": "+dstPort,protocol,packetNum,ipV4Packet.getPayload()};
+            Object [] newRow = {srcAddr.getHostAddress(),srcPort,dstAddr.getHostAddress(),dstPort,protocol,packetNum,ipV4Packet.getPayload()};
             ScannerCaptureView.tableModel.addRow(newRow);
             ScannerCaptureView.tableModel.fireTableDataChanged();
             ScannerViewController.captureView.revalidate();
