@@ -65,26 +65,28 @@ public class PacketCapture implements Runnable {
                 return;
             }
             IpV4Packet ipV4Packet = packet.get(IpV4Packet.class);
-            Inet4Address srcAddr = ipV4Packet.getHeader().getSrcAddr();
-            Inet4Address dstAddr = ipV4Packet.getHeader().getDstAddr();
-            IpNumber protocol = ipV4Packet.getHeader().getProtocol();
-            Object srcPort = "";
-            Object dstPort = "";
-            if (packet.contains(TcpPacket.class)) {
-                ScannerCaptureView.captureTable.setBackground(tcpColor);
-                srcPort = (TcpPort)packet.get(TcpPacket.class).getHeader().getSrcPort();
-                dstPort = (TcpPort)packet.get(TcpPacket.class).getHeader().getDstPort();
-            } else if (packet.contains(UdpPacket.class)) {
-                ScannerCaptureView.captureTable.setBackground(udpColor);
-                srcPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getSrcPort();
-                dstPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getDstPort();
+            if (ipV4Packet != null) {
+                Inet4Address srcAddr = ipV4Packet.getHeader().getSrcAddr();
+                Inet4Address dstAddr = ipV4Packet.getHeader().getDstAddr();
+                IpNumber protocol = ipV4Packet.getHeader().getProtocol();
+                Object srcPort = "";
+                Object dstPort = "";
+                if (packet.contains(TcpPacket.class)) {
+                    ScannerCaptureView.captureTable.setBackground(tcpColor);
+                    srcPort = (TcpPort)packet.get(TcpPacket.class).getHeader().getSrcPort();
+                    dstPort = (TcpPort)packet.get(TcpPacket.class).getHeader().getDstPort();
+                } else if (packet.contains(UdpPacket.class)) {
+                    ScannerCaptureView.captureTable.setBackground(udpColor);
+                    srcPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getSrcPort();
+                    dstPort = (UdpPort)packet.get(UdpPacket.class).getHeader().getDstPort();
+                }
+                Object [] newRow = {srcAddr.getHostAddress(),srcPort,dstAddr.getHostAddress(),dstPort,protocol,packetNum,ipV4Packet.getPayload()};
+                ScannerCaptureView.tableModel.addRow(newRow);
+                ScannerCaptureView.tableModel.fireTableDataChanged();
+                ScannerViewController.captureView.revalidate();
+                ScannerViewController.captureView.repaint();
+                packetNum++;
             }
-            Object [] newRow = {srcAddr.getHostAddress(),srcPort,dstAddr.getHostAddress(),dstPort,protocol,packetNum,ipV4Packet.getPayload()};
-            ScannerCaptureView.tableModel.addRow(newRow);
-            ScannerCaptureView.tableModel.fireTableDataChanged();
-            ScannerViewController.captureView.revalidate();
-            ScannerViewController.captureView.repaint();
-            packetNum++;
         }
         handle.close();
     }
