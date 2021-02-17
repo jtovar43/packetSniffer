@@ -26,7 +26,7 @@ public class PacketCapture implements Runnable {
         super();
     }
 
-    private int packetNum = 1;
+    static int packetNum = 1;
     static boolean capturing = false;
     PcapNetworkInterface listenInterface;
     
@@ -87,6 +87,5 @@ public class PacketCapture implements Runnable {
             packetNum++;
         }
         handle.close();
-
     }
 }

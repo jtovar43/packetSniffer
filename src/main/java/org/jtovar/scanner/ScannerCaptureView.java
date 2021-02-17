@@ -3,6 +3,8 @@ package org.jtovar.scanner;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridLayout;
@@ -17,6 +19,8 @@ public class ScannerCaptureView extends JPanel {
         }
     };
 
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+
     static JTable captureTable;
 
     public ScannerCaptureView() throws PcapNativeException {
@@ -26,6 +30,11 @@ public class ScannerCaptureView extends JPanel {
 
     private void initComponents() throws PcapNativeException {
         captureTable = new JTable(tableModel);
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer)captureTable.getTableHeader().getDefaultRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        captureTable.setDefaultRenderer(Object.class,centerRenderer);
+        captureTable.getTableHeader().setDefaultRenderer(headerRenderer);
         this.add(new JScrollPane(captureTable));
     }
 }

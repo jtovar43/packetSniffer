@@ -83,7 +83,7 @@ public class ScannerTopPanel extends JPanel implements ActionListener {
         }
         else if (source.equals(clearBtn)) {
             ScannerCaptureView.tableModel.setRowCount(0);
-            
+            PacketCapture.packetNum = 1;
         }
     }
     
