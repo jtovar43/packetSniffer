@@ -6,7 +6,7 @@ _**NOTE: This project is under active development as a personal project and not 
 ![GitHub latest version](https://img.shields.io/github/v/release/jtovar43/packetSniffer)
 ![GitHub CodeQL Workflow](https://img.shields.io/github/workflow/status/jtovar43/packetSniffer/CodeQL)
 ![GitHub last commit](https://img.shields.io/github/last-commit/jtovar43/packetSniffer)
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/jtovar43/packetSniffer/master/LICENSEs)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/jtovar43/packetSniffer/main/LICENSE)
 
 This is a simple packet sniffer written in Java that utilizes the [pcap4j](https://github.com/kaitoy/pcap4j) library.
 
